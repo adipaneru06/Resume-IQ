@@ -1,0 +1,630 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex flex-col w-full">
+  <div class="w-full max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter">
+    
+    <!-- SECTION 1: HERO WITH UPLOAD -->
+    <section class="pt-8 pb-16 md:py-16" id="analyze">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        
+        <!-- Left Column: Upload Workspace -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+          <div class="space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-[#E6E2DA] w-fit">
+              <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Editorial ATS Intelligence</span>
+            </div>
+            <h1 class="font-headline-xl text-headline-xl text-on-surface leading-tight text-balance">
+              Find out how your resume performs before a recruiter does.
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+              Upload your resume and get an ATS score, detailed feedback and clear suggestions to improve it.
+            </p>
+          </div>
+
+          <!-- Document Upload Dropzone & Form -->
+          <form id="upload-form" class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+            <div class="relative border-2 border-dashed border-[#D2CCC2] hover:border-primary bg-surface transition-all duration-200 rounded-xl p-8 sm:p-10 flex flex-col items-center justify-center text-center cursor-pointer group" id="drop-zone" onclick="document.getElementById('file-upload-input').click()">
+              <input accept=".pdf,.png,.jpg,.jpeg" class="sr-only" id="file-upload-input" name="file" onchange="handleFileSelect(this)" type="file"/>
+              <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200 mb-3">
+                <span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface" id="file-upload-label">
+                Drag &amp; drop your resume here, or <span class="text-primary font-semibold underline decoration-1 underline-offset-4 cursor-pointer hover:text-primary-container">Browse files</span>
+              </p>
+              <span class="font-body-sm text-body-sm text-outline mt-1.5" id="file-upload-subtext">
+                Supports PDF, PNG, JPG (Max 5MB)
+              </span>
+            </div>
+
+            <!-- Optional Fields -->
+            <div class="space-y-4 pt-1">
+              <div>
+                <label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="target-role">
+                  Target job role <span class="font-body-sm text-outline font-normal">(optional)</span>
+                </label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">work_outline</span>
+                  <input class="w-full pl-10 pr-4 py-2.5 bg-surface border border-[#E6E2DA] rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors" id="target-role" name="target_role" placeholder="e.g. Junior Software Engineer, Product Analyst" type="text"/>
+                </div>
+              </div>
+
+              <!-- Collapsible JD Input -->
+              <div>
+                <button class="flex items-center gap-1.5 font-label-md text-label-md text-primary hover:text-primary-container transition-colors group cursor-pointer" id="jd-toggle-btn" onclick="toggleJdSection()" type="button">
+                  <span class="material-symbols-outlined text-[16px] transition-transform duration-200" id="jd-toggle-icon">add</span>
+                  <span>Paste target job description (optional)</span>
+                </button>
+                <div class="hidden mt-3" id="jd-input-container">
+                  <textarea id="target-jd" name="job_description" class="w-full p-3 bg-surface border border-[#E6E2DA] rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors resize-y" placeholder="Paste the full job posting requirements here for deep keyword alignment scoring..." rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Client-side Error Message Container -->
+            <div id="upload-error-box" class="hidden p-3.5 rounded-lg border border-[#F5C2C7] bg-[#FAF0EE] text-on-surface text-body-sm flex items-start gap-2.5">
+              <span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">error_outline</span>
+              <span id="upload-error-text">Please select a valid resume file.</span>
+            </div>
+
+            <!-- Action Block -->
+            <div class="pt-2 space-y-3">
+              <button id="analyze-btn" class="w-full py-3.5 px-6 rounded-lg bg-primary hover:bg-[#185943] active:bg-[#144736] text-on-primary font-label-lg text-label-lg transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer" onclick="handleAnalyzeSubmit()" type="button">
+                <span class="material-symbols-outlined text-[18px]">verified</span>
+                <span>Analyze my resume</span>
+              </button>
+              <div class="flex items-center justify-center gap-1.5 font-body-sm text-body-sm text-outline">
+                <span class="material-symbols-outlined text-[14px]">lock</span>
+                <span>Your file is processed locally and deleted after analysis.</span>
+              </div>
+            </div>
+          </form>
+
+          <!-- ANALYZING LOADING STATE (Hidden by default; styled strictly with design tokens) -->
+          <div id="analyzing-state" class="hidden bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-8 shadow-sm space-y-6">
+            <div class="space-y-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-[#E6E2DA] w-fit">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Evaluation Engine Active</span>
+              </div>
+              <h3 class="font-headline-md text-headline-md text-on-surface">Analyzing your resume...</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Our editorial engine is extracting document structure and evaluating career benchmarks.
+              </p>
+            </div>
+
+            <!-- Real Step Indicator List -->
+            <div class="space-y-3 pt-2">
+              <div id="step-extract" class="p-3.5 rounded-lg border border-[#E6E2DA] bg-surface flex items-center gap-3 transition-colors">
+                <span class="material-symbols-outlined text-primary text-[20px] animate-spin" id="step-icon-extract">progress_activity</span>
+                <div class="flex-1">
+                  <p class="font-label-md text-label-md text-on-surface">1. Extracting Document Text</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Reading clean UTF-8 text and executing OCR on graphics if required.</p>
+                </div>
+              </div>
+
+              <div id="step-ats" class="p-3.5 rounded-lg border border-[#E6E2DA] bg-surface flex items-center gap-3 transition-colors opacity-50">
+                <span class="material-symbols-outlined text-outline text-[20px]" id="step-icon-ats">hourglass_empty</span>
+                <div class="flex-1">
+                  <p class="font-label-md text-label-md text-on-surface">2. Auditing ATS Format &amp; Contacts</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Checking single-column readability, anchors, and standard sections.</p>
+                </div>
+              </div>
+
+              <div id="step-match" class="p-3.5 rounded-lg border border-[#E6E2DA] bg-surface flex items-center gap-3 transition-colors opacity-50">
+                <span class="material-symbols-outlined text-outline text-[20px]" id="step-icon-match">hourglass_empty</span>
+                <div class="flex-1">
+                  <p class="font-label-md text-label-md text-on-surface">3. Matching Role Keywords &amp; Competencies</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Comparing credentials against industry taxonomies and job requirements.</p>
+                </div>
+              </div>
+
+              <div id="step-improve" class="p-3.5 rounded-lg border border-[#E6E2DA] bg-surface flex items-center gap-3 transition-colors opacity-50">
+                <span class="material-symbols-outlined text-outline text-[20px]" id="step-icon-improve">hourglass_empty</span>
+                <div class="flex-1">
+                  <p class="font-label-md text-label-md text-on-surface">4. Synthesizing Editorial Improvements</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Generating prioritized suggestions and before/after metric rewrites.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Live Sample Diagnostic Card -->
+        <div class="lg:col-span-5 sticky top-24">
+          <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-7 shadow-sm space-y-6">
+            <div class="flex items-center justify-between border-b border-[#E6E2DA] pb-4">
+              <div>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">Sample Diagnostic</h3>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Live evaluation mockup</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm border border-[#E6E2DA]">
+                Software Engineer
+              </span>
+            </div>
+
+            <!-- Circular Gauge -->
+            <div class="flex items-center gap-6 py-2 bg-surface-container-low rounded-xl p-4 border border-[#E6E2DA]">
+              <div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+                <svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+                  <circle cx="50" cy="50" fill="none" r="40" stroke="#E6E2DA" stroke-width="8"></circle>
+                  <circle cx="50" cy="50" fill="none" r="40" stroke="#00563e" stroke-dasharray="251.2" stroke-dashoffset="55.2" stroke-linecap="round" stroke-width="8"></circle>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <span class="font-headline-md text-headline-md text-on-surface leading-none">78</span>
+                  <span class="font-label-sm text-label-sm text-outline">/ 100</span>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="inline-flex items-center gap-1.5 text-secondary font-label-md text-label-md">
+                  <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                  <span>ATS Score: Strong</span>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Parses cleanly through modern ATS scanners. 3 high-impact suggestions remain.
+                </p>
+              </div>
+            </div>
+
+            <!-- Suggestion Rows -->
+            <div class="space-y-3 text-left">
+              <div class="p-3.5 rounded-lg border border-[#C4E2D5] bg-[#EBF5F0] flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 shrink-0">check_circle</span>
+                <div class="space-y-0.5">
+                  <p class="font-label-md text-label-md text-on-surface">Formatting and Contacts Verified</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Clean single-column structure and phone/email anchors parse accurately.</p>
+                </div>
+              </div>
+              <div class="p-3.5 rounded-lg border border-[#F5DCBF] bg-[#FDF6EE] flex items-start gap-3">
+                <span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 shrink-0">warning</span>
+                <div class="space-y-0.5">
+                  <p class="font-label-md text-label-md text-on-surface">Target Keywords Missing</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Add verified competencies: <span class="font-medium text-on-surface">Distributed Systems</span>, <span class="font-medium text-on-surface">TypeScript</span>, and <span class="font-medium text-on-surface">CI/CD</span>.</p>
+                </div>
+              </div>
+              <div class="p-3.5 rounded-lg border border-[#F2CBC4] bg-[#FAF0EE] flex items-start gap-3">
+                <span class="material-symbols-outlined text-error text-[18px] mt-0.5 shrink-0">priority_high</span>
+                <div class="space-y-0.5">
+                  <p class="font-label-md text-label-md text-on-surface">Quantify Experience Bullet #2</p>
+                  <p class="font-body-sm text-body-sm text-on-surface-variant">Convert qualitative task descriptions into percentage improvements or raw volume handled.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-t border-[#E6E2DA] pt-4 flex items-center justify-between text-outline font-label-sm text-label-sm">
+              <span>Parser: {{ gemini_model_display|default('Gemini 2.5 Flash') }}</span>
+              <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Ready for review</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: WHAT YOU GET AFTER ANALYSIS -->
+    <section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="what-you-get">
+      <div class="max-w-2xl mb-12">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Transparent Architecture</span>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">What you'll get</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          A comprehensive diagnostic breakdown tailored for modern applicant tracking systems and human reviewers.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">score</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">ATS Score</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Evaluates how well automated hiring filters and OCR scrapers can read and parse your resume structure without dropping data.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+            <span>Parsability Check</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </div>
+        </div>
+        <!-- Feature 2 -->
+        <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">target</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Job Match</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Measures how closely your profile fits the target role, complete with a prioritized catalog of missing domain keywords.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+            <span>Keyword Gap Matrix</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </div>
+        </div>
+        <!-- Feature 3 -->
+        <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">segment</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Section Scores</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Independent, weighted benchmarks for Professional Summary, Technical Skills, Experience, Projects, and Education.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+            <span>5 Section Metrics</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </div>
+        </div>
+        <!-- Feature 4 -->
+        <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">tips_and_updates</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Smart Suggestions</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Specific, actionable edits ranked directly by their estimated influence on securing technical recruiter callback rates.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+            <span>Ranked Impact Log</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </div>
+        </div>
+        <!-- Feature 5 -->
+        <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">edit_note</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Bullet Rewrites</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Weak or vague bullet points re-engineered with high-impact active verbs, structural context, and measurable metric templates.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+            <span>Before / After Synthesis</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </div>
+        </div>
+        <!-- Feature 6 -->
+        <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">spellcheck</span>
+            </div>
+            <div>
+              <h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Language Check</h3>
+              <p class="font-body-md text-body-md text-on-surface-variant">
+                Exhaustive review targeting passive voice, corporate platitudes, spelling variations, and inconsistent verb tense usage.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+            <span>Editorial Clarity</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: HOW IT WORKS -->
+    <section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="how-it-works">
+      <div class="max-w-2xl mb-14">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Evaluation Process</span>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">How it works</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Four transparent steps from upload to tailored recommendations.
+        </p>
+      </div>
+      <div class="relative">
+        <!-- Connecting Line for Desktop -->
+        <div class="hidden md:block absolute top-10 left-8 right-8 h-px bg-[#E6E2DA] z-0"></div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+          <!-- Step 1 -->
+          <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-xl text-headline-xl text-primary font-normal">01</span>
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+                <span class="material-symbols-outlined text-[16px]">upload_file</span>
+              </span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Upload</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              Add your resume as a PDF, JPEG, or PNG file directly into the local sandbox.
+            </p>
+          </div>
+          <!-- Step 2 -->
+          <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-xl text-headline-xl text-primary font-normal">02</span>
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+                <span class="material-symbols-outlined text-[16px]">document_scanner</span>
+              </span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Extract</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              The system reads the text cleanly, using high-resolution OCR if the document is flattened or scanned.
+            </p>
+          </div>
+          <!-- Step 3 -->
+          <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-xl text-headline-xl text-primary font-normal">03</span>
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+                <span class="material-symbols-outlined text-[16px]">analytics</span>
+              </span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Analyze</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              AI evaluates content hierarchy, syntactic clarity, metric density, and role-specific keywords.
+            </p>
+          </div>
+          <!-- Step 4 -->
+          <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-xl text-headline-xl text-primary font-normal">04</span>
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+                <span class="material-symbols-outlined text-[16px]">auto_fix_high</span>
+              </span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Improve</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              Receive your comprehensive score and a prioritized, actionable list of suggestions ready to apply.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: THE CRITERIA BEHIND YOUR SCORE -->
+    <section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="criteria">
+      <div class="max-w-2xl mb-12">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Analytical Rubric</span>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">The criteria behind your score</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Every resume is evaluated against the same transparent criteria without arbitrary grading algorithms.
+        </p>
+      </div>
+
+      <!-- Criteria Table Container (Driven directly by config.py single source of truth) -->
+      <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl shadow-sm divide-y divide-[#E6E2DA]">
+        {% for c in criteria %}
+        <div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1 md:max-w-xl">
+            <div class="flex items-center gap-2.5">
+              <h3 class="font-label-lg text-label-lg text-on-surface">{{ c.name }}</h3>
+              <span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">{{ c.tag }}</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              {{ c.description }}
+            </p>
+          </div>
+          <div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+            <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+              <div class="bg-primary h-full rounded-full" style="width: {{ c.weight }}%;"></div>
+            </div>
+            <span class="font-label-md text-label-md text-on-surface w-10 text-right">{{ c.weight }}%</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="mt-4 text-center">
+        <p class="font-body-sm text-body-sm text-outline italic">
+          * Scores are guidance, not a guarantee of hiring outcomes. Recruiting systems vary across enterprise organizations.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 5: SAMPLE SUGGESTIONS PREVIEW -->
+    <section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="suggestions">
+      <div class="max-w-2xl mb-12">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Actionable Guidance</span>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">Suggestions that actually help</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Direct, constructive advice that focuses on substance rather than generic platitudes.
+        </p>
+      </div>
+
+      <!-- Priority Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <!-- High Priority -->
+        <div class="bg-surface-container-lowest border border-[#F5C2C7] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#FDEDED] text-[#C84B31] font-label-sm text-label-sm border border-[#F5C2C7]">
+                High Priority
+              </span>
+              <span class="material-symbols-outlined text-[#C84B31] text-[20px]">error_outline</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Missing quantitative metrics in recent experience</h4>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">
+                Recruiters scan for concrete numbers rather than generic claims of contribution.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#F5C2C7] bg-[#FAF0EE] -mx-6 -mb-6 p-4 rounded-b-xl">
+            <p class="font-label-sm text-label-sm text-[#C84B31] font-semibold mb-1">Recommended Fix</p>
+            <p class="font-body-sm text-body-sm text-on-surface">Add numbers showing scale, users impacted, or % improvement in performance.</p>
+          </div>
+        </div>
+
+        <!-- Medium Priority -->
+        <div class="bg-surface-container-lowest border border-[#FCE1B6] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#FEF6EC] text-[#D9822B] font-label-sm text-label-sm border border-[#FCE1B6]">
+                Medium Priority
+              </span>
+              <span class="material-symbols-outlined text-[#D9822B] text-[20px]">warning_amber</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Passive voice detected in project descriptions</h4>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">
+                Passive statements dilute individual initiative and technical ownership.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#FCE1B6] bg-[#FDF6EE] -mx-6 -mb-6 p-4 rounded-b-xl">
+            <p class="font-label-sm text-label-sm text-[#D9822B] font-semibold mb-1">Recommended Fix</p>
+            <p class="font-body-sm text-body-sm text-on-surface">Replace "Was responsible for building" with decisive verbs like "Architected and deployed".</p>
+          </div>
+        </div>
+
+        <!-- Low Priority -->
+        <div class="bg-surface-container-lowest border border-[#B7E1CD] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full bg-[#EDF7F2] text-[#2D8A66] font-label-sm text-label-sm border border-[#B7E1CD]">
+                Low Priority
+              </span>
+              <span class="material-symbols-outlined text-[#2D8A66] text-[20px]">info</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Generic skills section heading</h4>
+              <p class="font-body-sm text-body-sm text-on-surface-variant">
+                Lumping all tools into a single unsegmented paragraph confuses keyword parsers.
+              </p>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#B7E1CD] bg-[#EBF5F0] -mx-6 -mb-6 p-4 rounded-b-xl">
+            <p class="font-label-sm text-label-sm text-[#2D8A66] font-semibold mb-1">Recommended Fix</p>
+            <p class="font-body-sm text-body-sm text-on-surface">Categorize into "Languages", "Frameworks", and "Developer Tools" for faster parsing.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Before / After Bullet Rewrite Card -->
+      <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-2 mb-6">
+          <span class="material-symbols-outlined text-primary text-[20px]">autorenew</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Real Bullet Rewrite Example</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <!-- Before Card -->
+          <div class="border border-[#F5C2C7] bg-[#FAF0EE] rounded-xl p-6 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#C84B31]"></span>
+                <span class="font-label-md text-label-md text-[#C84B31] font-semibold uppercase tracking-wider">Before (Original Submission)</span>
+              </div>
+              <p class="font-headline-sm text-headline-sm italic text-on-surface font-normal">
+                "Worked on the frontend of a web application and fixed bugs reported by users."
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-[#F2CBC4] flex items-center gap-2 text-outline font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-[16px] text-[#C84B31]">close</span>
+              <span>Lacks tools, metrics, scale, and proactive impact</span>
+            </div>
+          </div>
+          <!-- After Card -->
+          <div class="border border-[#C4E2D5] bg-[#EBF5F0] rounded-xl p-6 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                <span class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wider">After (Resumely AI Rewrite)</span>
+              </div>
+              <p class="font-headline-sm text-headline-sm text-on-surface font-medium">
+                "Redesigned core UI workflows using React and TypeScript, resolving 45+ customer-reported defects and improving page load speeds by 28%."
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-[#C4E2D5] flex items-center gap-2 text-secondary font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+              <span>Adds targeted stack keywords, exact defect count, and % benchmark</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ABOUT THE CREATOR (Placeholders clearly marked) -->
+    <section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="about">
+      <div class="max-w-2xl mb-12">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Editorial Origin</span>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">About the creator</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Engineered to dismantle the opacity of automated recruitment pipelines.
+        </p>
+      </div>
+
+      <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-8 sm:p-10 shadow-sm flex flex-col md:flex-row items-center md:items-start gap-8">
+        <!-- Creator Avatar Placeholder: static/images/profile.jpg -->
+        <div class="shrink-0 flex flex-col items-center">
+          <img alt="Creator Portrait" class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border border-[#E6E2DA] shadow-sm" src="{{ creator.avatar_url }}"/>
+          <span class="mt-3 px-3 py-1 rounded-full bg-surface-container border border-[#E6E2DA] text-outline font-label-sm text-label-sm">
+            {{ creator.tag }}
+          </span>
+        </div>
+
+        <!-- Creator Profile Content Placeholders -->
+        <div class="flex-1 space-y-4 text-center md:text-left">
+          <div>
+            <!-- PLACEHOLDER: CREATOR NAME & ROLE -->
+            <h3 class="font-headline-md text-headline-md text-on-surface">{{ creator.name }}</h3>
+            <p class="font-label-lg text-label-lg text-primary mt-0.5">{{ creator.role }}</p>
+          </div>
+          <!-- PLACEHOLDER: CREATOR BIO -->
+          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            {{ creator.bio }}
+          </p>
+          <div class="p-4 rounded-lg bg-surface border border-[#E6E2DA] font-body-sm text-body-sm text-on-surface-variant">
+            <span class="font-medium text-on-surface">Technical Foundation:</span> {{ creator.technical_foundation }}
+          </div>
+          <!-- PLACEHOLDER: SOCIAL & PORTFOLIO LINKS -->
+          <div class="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-3">
+            <a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" href="{{ creator.github_url }}" rel="noopener noreferrer" target="_blank">
+              <svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
+              <span>GitHub Profile</span>
+            </a>
+            <a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" href="{{ creator.linkedin_url }}" rel="noopener noreferrer" target="_blank">
+              <svg class="w-4 h-4 fill-current text-[#0A66C2]" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+              <span>LinkedIn Connect</span>
+            </a>
+            <a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors" href="#analyze">
+              <span class="material-symbols-outlined text-[16px]">upload</span>
+              <span>Test The Parser</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CALLOUT DESK -->
+    <div class="my-16 p-8 rounded-xl bg-surface-container-high border border-[#E6E2DA] flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1 text-center md:text-left">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Ready to audit your resume?</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Immediate results. Zero tracking. Honest algorithmic critique.</p>
+      </div>
+      <a class="shrink-0 px-6 py-3 rounded-lg bg-primary hover:bg-[#185943] text-on-primary font-label-lg text-label-lg transition-colors shadow-sm" href="#analyze">
+        Upload Resume Now
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/upload.js"></script>
+{% endblock %}
+

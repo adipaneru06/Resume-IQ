@@ -1,0 +1,11 @@
+/* Resumely AI Custom Utilities */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Subtle focus ring style matching design tokens */
+*:focus-visible {
+  outline: 2px solid #00563e;
+  outline-offset: 2px;
+}
+

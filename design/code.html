@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error":"#ffffff","tertiary":"#723d00","on-tertiary-fixed-variant":"#6d3a00","on-background":"#1c1b1b","surface-container-lowest":"#ffffff","on-tertiary":"#ffffff","tertiary-container":"#955100","surface-bright":"#fcf9f8","error-container":"#ffdad6","surface-variant":"#e5e2e1","on-surface-variant":"#3f4944","outline":"#6f7973","on-secondary-fixed-variant":"#005138","secondary":"#006c4b","inverse-primary":"#8ad6b5","secondary-container":"#9af5ca","primary":"#00563e","on-primary":"#ffffff","on-error-container":"#93000a","on-primary-fixed":"#002116","on-secondary":"#ffffff","surface":"#fcf9f8","secondary-fixed":"#9af5ca","surface-container-high":"#eae7e7","outline-variant":"#bec9c2","on-secondary-fixed":"#002114","tertiary-fixed-dim":"#ffb77a","primary-fixed":"#a5f2d0","surface-container":"#f0eded","inverse-surface":"#313030","surface-container-highest":"#e5e2e1","on-primary-fixed-variant":"#00513b","surface-tint":"#196b50","tertiary-fixed":"#ffdcc2","secondary-fixed-dim":"#7fd8af","primary-container":"#1f6f54","on-tertiary-container":"#ffd7b9","primary-fixed-dim":"#8ad6b5","error":"#ba1a1a","surface-container-low":"#f6f3f2","on-primary-container":"#a2efcd","on-surface":"#1c1b1b","on-tertiary-fixed":"#2e1500","on-secondary-container":"#057351","background":"#fcf9f8","inverse-on-surface":"#f3f0ef","surface-dim":"#dcd9d9"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-md":"1rem","gutter-mobile":"1rem",gutter:"1.5rem","space-xs":"0.25rem","space-lg":"1.5rem","space-xl":"2.5rem","space-sm":"0.5rem",margin:"2rem","margin-mobile":"1rem"},fontFamily:{"headline-sm":["Newsreader"],"label-lg":["Inter"],"body-xl":["Inter"],"body-lg":["Inter"],"headline-xl":["Newsreader"],"body-sm":["Inter"],"display-lg":["Newsreader"],"headline-lg":["Newsreader"],"headline-xl-mobile":["Newsreader"],"body-md":["Inter"],"headline-md":["Newsreader"],"display-lg-mobile":["Newsreader"],"label-md":["Inter"],"label-sm":["Inter"]},fontSize:{"headline-sm":["20px",{lineHeight:"28px",fontWeight:"500"}],"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"600"}],"body-xl":["18px",{lineHeight:"28px",fontWeight:"400"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"headline-xl":["40px",{lineHeight:"48px",letterSpacing:"-0.015em",fontWeight:"400"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"display-lg":["56px",{lineHeight:"64px",letterSpacing:"-0.02em",fontWeight:"400"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"500"}],"headline-xl-mobile":["30px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"400"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"headline-md":["24px",{lineHeight:"32px",fontWeight:"500"}],"display-lg-mobile":["38px",{lineHeight:"44px",letterSpacing:"-0.01em",fontWeight:"400"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F4] border-b border-[#E6E2DA]"><div class="h-16 max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter flex items-center justify-between"><a class="flex items-center gap-space-sm" data-path="resumely-review" href="#"><img alt="Resumely AI Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UbGP1q5CilrF5rrhKlYRfu75S9S88q8nf8dZh6Gv1Sh2d_SxBZwZkGEsh7qYAIt7lgFN4N7O3BrEd9i5xet5PAjzaP12TkuhJ-eGHFHrYZV31P9l1ciFBAO3e1frxwf9DTu51WDjtYA9eKX_qnJfwrtqdQkE1m0ymL-L9lo8yq5Tcvdc8TLuBS17Nncygp-6PAEHIGGec__R51Bnc-NkMJ1FjLCMCiR12T_77dSB0"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight hidden sm:inline">Resumely AI</span></a><nav class="flex items-center gap-space-md md:gap-space-lg" data-active-classes="text-primary font-label-lg text-label-lg underline underline-offset-8 decoration-primary"><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="analyze" href="#analyze">Analyze</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hidden sm:inline" data-path="what-you-get" href="#what-you-get">What You Get</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hidden md:inline" data-path="how-it-works" href="#how-it-works">How it works</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hidden md:inline" data-path="criteria" href="#criteria">Criteria</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#about">About</a><a class="ml-space-xs flex items-center" data-path="account" href="#account"><img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-[#E6E2DA]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFgX3GnpLGNxNQ_EUNm89jskGp3EjE29BfpHmhq3Sm_bRlqm_VigoYNUaEmflEhi0iMrBPoZiz1MpI8BJdPYp6R0Hmyo2ayfBMhtA0Wq66pU0CM5Z23SM4ddVEsq200ANBcNre1Oc9ElIf9OcJmYGZZ6Y9RhfwPmuXpzbCR8LjmN6CTb2BfjLCIa7Z2d8if29nL5rhHlPjVAPqIzTSsUIGlwmIZpFh_zNVUQ9AUA"/></a></nav></div></header><main class="w-full pt-16 bg-[#FAF8F4]"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter">
+<!-- SECTION 1: HERO WITH UPLOAD -->
+<section class="pt-8 pb-16 md:py-16" id="analyze">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+<!-- Left Column: Upload Workspace -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<div class="space-y-3">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-[#E6E2DA] w-fit">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Editorial ATS Intelligence</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface leading-tight text-balance">
+              Find out how your resume performs before a recruiter does.
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+              Upload your resume and get an ATS score, detailed feedback and clear suggestions to improve it.
+            </p>
+</div>
+<!-- Document Upload Dropzone -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+<div class="relative border-2 border-dashed border-[#D2CCC2] hover:border-primary bg-surface transition-all duration-200 rounded-xl p-8 sm:p-10 flex flex-col items-center justify-center text-center cursor-pointer group" id="drop-zone" onclick="document.getElementById('file-upload-input').click()">
+<input accept=".pdf,.png,.jpg,.jpeg" class="sr-only" id="file-upload-input" onchange="handleFileSelect(this)" type="file"/>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors duration-200 mb-3">
+<span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface" id="file-upload-label">
+                Drag &amp; drop your resume here, or <span class="text-primary font-semibold underline decoration-1 underline-offset-4 cursor-pointer hover:text-primary-container">Browse files</span>
+</p>
+<span class="font-body-sm text-body-sm text-outline mt-1.5">
+                Supports PDF, PNG, JPG (Max 5MB)
+              </span>
+</div>
+<!-- Optional Fields -->
+<div class="space-y-4 pt-1">
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-1.5" for="target-role">
+                  Target job role <span class="font-body-sm text-outline font-normal">(optional)</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">work_outline</span>
+<input class="w-full pl-10 pr-4 py-2.5 bg-surface border border-[#E6E2DA] rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors" id="target-role" placeholder="e.g. Junior Software Engineer, Product Analyst" type="text"/>
+</div>
+</div>
+<!-- Collapsible JD Input -->
+<div>
+<button class="flex items-center gap-1.5 font-label-md text-label-md text-primary hover:text-primary-container transition-colors group cursor-pointer" id="jd-toggle-btn" onclick="toggleJdSection()" type="button">
+<span class="material-symbols-outlined text-[16px] transition-transform duration-200" id="jd-toggle-icon">add</span>
+<span>Paste target job description (optional)</span>
+</button>
+<div class="hidden mt-3" id="jd-input-container">
+<textarea class="w-full p-3 bg-surface border border-[#E6E2DA] rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors resize-y" placeholder="Paste the full job posting requirements here for deep keyword alignment scoring..." rows="4"></textarea>
+</div>
+</div>
+</div>
+<!-- Action Block -->
+<div class="pt-2 space-y-3">
+<button class="w-full py-3.5 px-6 rounded-lg bg-primary hover:bg-[#185943] active:bg-[#144736] text-on-primary font-label-lg text-label-lg transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer" onclick="simulateAnalysis()" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Analyze my resume</span>
+</button>
+<div class="flex items-center justify-center gap-1.5 font-body-sm text-body-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Your file is processed locally and deleted after analysis.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Live Sample Diagnostic Card -->
+<div class="lg:col-span-5 sticky top-24">
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-7 shadow-sm space-y-6">
+<div class="flex items-center justify-between border-b border-[#E6E2DA] pb-4">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Sample Diagnostic</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Live evaluation mockup</p>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm border border-[#E6E2DA]">
+                Software Engineer
+              </span>
+</div>
+<!-- Circular Gauge -->
+<div class="flex items-center gap-6 py-2 bg-surface-container-low rounded-xl p-4 border border-[#E6E2DA]">
+<div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="40" stroke="#E6E2DA" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#00563e" stroke-dasharray="251.2" stroke-dashoffset="55.2" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="font-headline-md text-headline-md text-on-surface leading-none">78</span>
+<span class="font-label-sm text-label-sm text-outline">/ 100</span>
+</div>
+</div>
+<div class="space-y-1">
+<div class="inline-flex items-center gap-1.5 text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>ATS Score: Strong</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Parses cleanly through modern ATS scanners. 3 high-impact suggestions remain.
+                </p>
+</div>
+</div>
+<!-- Suggestion Rows -->
+<div class="space-y-3 text-left">
+<div class="p-3.5 rounded-lg border border-[#C4E2D5] bg-[#EBF5F0] flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5 shrink-0">check_circle</span>
+<div class="space-y-0.5">
+<p class="font-label-md text-label-md text-on-surface">Formatting and Contacts Verified</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Clean single-column structure and phone/email anchors parse accurately.</p>
+</div>
+</div>
+<div class="p-3.5 rounded-lg border border-[#F5DCBF] bg-[#FDF6EE] flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 shrink-0">warning</span>
+<div class="space-y-0.5">
+<p class="font-label-md text-label-md text-on-surface">Target Keywords Missing</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Add verified competencies: <span class="font-medium text-on-surface">Distributed Systems</span>, <span class="font-medium text-on-surface">TypeScript</span>, and <span class="font-medium text-on-surface">CI/CD</span>.</p>
+</div>
+</div>
+<div class="p-3.5 rounded-lg border border-[#F2CBC4] bg-[#FAF0EE] flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-[18px] mt-0.5 shrink-0">priority_high</span>
+<div class="space-y-0.5">
+<p class="font-label-md text-label-md text-on-surface">Quantify Experience Bullet #2</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Convert qualitative task descriptions into percentage improvements or raw volume handled.</p>
+</div>
+</div>
+</div>
+<div class="border-t border-[#E6E2DA] pt-4 flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Parser: Gemini 1.5 Pro</span>
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Ready for review</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: WHAT YOU GET AFTER ANALYSIS -->
+<section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="what-you-get">
+<div class="max-w-2xl mb-12">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Transparent Architecture</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">What you'll get</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          A comprehensive diagnostic breakdown tailored for modern applicant tracking systems and human reviewers.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">score</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">ATS Score</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Evaluates how well automated hiring filters and OCR scrapers can read and parse your resume structure without dropping data.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Parsability Check</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">target</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Job Match</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Measures how closely your profile fits the target role, complete with a prioritized catalog of missing domain keywords.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Keyword Gap Matrix</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">segment</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Section Scores</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Independent, weighted benchmarks for Professional Summary, Technical Skills, Experience, Projects, and Education.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>5 Section Metrics</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">tips_and_updates</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Smart Suggestions</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Specific, actionable edits ranked directly by their estimated influence on securing technical recruiter callback rates.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Ranked Impact Log</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 5 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">edit_note</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Bullet Rewrites</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Weak or vague bullet points re-engineered with high-impact active verbs, structural context, and measurable metric templates.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Before / After Synthesis</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Feature 6 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm hover:border-primary transition-colors flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">spellcheck</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Language Check</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Exhaustive review targeting passive voice, corporate platitudes, spelling variations, and inconsistent verb tense usage.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#E6E2DA] flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Editorial Clarity</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: HOW IT WORKS -->
+<section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="how-it-works">
+<div class="max-w-2xl mb-14">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Evaluation Process</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">How it works</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Four transparent steps from upload to tailored recommendations.
+        </p>
+</div>
+<div class="relative">
+<!-- Connecting Line for Desktop -->
+<div class="hidden md:block absolute top-10 left-8 right-8 h-px bg-[#E6E2DA] z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+<!-- Step 1 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-headline-xl text-headline-xl text-primary font-normal">01</span>
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Upload</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Add your resume as a PDF, JPEG, or PNG file directly into the local sandbox.
+            </p>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-headline-xl text-headline-xl text-primary font-normal">02</span>
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+<span class="material-symbols-outlined text-[16px]">document_scanner</span>
+</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Extract</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              The system reads the text cleanly, using high-resolution OCR if the document is flattened or scanned.
+            </p>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-headline-xl text-headline-xl text-primary font-normal">03</span>
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+<span class="material-symbols-outlined text-[16px]">analytics</span>
+</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Analyze</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              AI evaluates content hierarchy, syntactic clarity, metric density, and role-specific keywords.
+            </p>
+</div>
+<!-- Step 4 -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-headline-xl text-headline-xl text-primary font-normal">04</span>
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface text-[14px]">
+<span class="material-symbols-outlined text-[16px]">auto_fix_high</span>
+</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Improve</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Receive your comprehensive score and a prioritized, actionable list of suggestions ready to apply.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: THE CRITERIA BEHIND YOUR SCORE -->
+<section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="criteria">
+<div class="max-w-2xl mb-12">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Analytical Rubric</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">The criteria behind your score</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Every resume is evaluated against the same transparent criteria without arbitrary grading algorithms.
+        </p>
+</div>
+<!-- Criteria Table Container -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl shadow-sm divide-y divide-[#E6E2DA]">
+<!-- Row 1 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">ATS Compatibility</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Standard Format</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Formatting cleanliness, single-column parsing, UTF-8 font compatibility, and standard section headers.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 20%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">20%</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Keyword Relevance</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Role Alignment</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Match depth with target role title, industry job requirements, and hard technical skills.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 18%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">18%</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Impact and Achievements</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Quantitative</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Measurable quantitative metrics (percentages, dollar amounts, scale) and decisive active verbs.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 18%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">18%</span>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Skills Presentation</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Taxonomy</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Relevance, organized category groupings (Languages, Frameworks, Cloud), and stack clarity.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 12%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">12%</span>
+</div>
+</div>
+<!-- Row 5 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Experience and Projects</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Depth</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Descriptive depth, problem-solving context, architectural ownership, and recency of tools.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 12%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">12%</span>
+</div>
+</div>
+<!-- Row 6 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Education and Credentials</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Accreditation</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Degree accuracy, institution validation, graduation timeline consistency, and honors.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 8%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">8%</span>
+</div>
+</div>
+<!-- Row 7 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Language Quality</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Grammar</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Flawless grammar, executive tone, elimination of first-person pronouns, and cliché eradication.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 6%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">6%</span>
+</div>
+</div>
+<!-- Row 8 -->
+<div class="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1 md:max-w-xl">
+<div class="flex items-center gap-2.5">
+<h3 class="font-label-lg text-label-lg text-on-surface">Overall Structure and Length</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">Economy</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Visual balance, uniform margin distribution, and disciplined 1-page economy for early to mid-level roles.
+            </p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-56 shrink-0">
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 6%;"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface w-10 text-right">6%</span>
+</div>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="font-body-sm text-body-sm text-outline italic">
+          * Scores are guidance, not a guarantee of hiring outcomes. Recruiting systems vary across enterprise organizations.
+        </p>
+</div>
+</section>
+<!-- SECTION 5: SAMPLE SUGGESTIONS PREVIEW -->
+<section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="suggestions">
+<div class="max-w-2xl mb-12">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Actionable Guidance</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">Suggestions that actually help</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Direct, constructive advice that focuses on substance rather than generic platitudes.
+        </p>
+</div>
+<!-- Priority Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- High Priority -->
+<div class="bg-surface-container-lowest border border-[#F5C2C7] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full bg-[#FDEDED] text-[#C84B31] font-label-sm text-label-sm border border-[#F5C2C7]">
+                High Priority
+              </span>
+<span class="material-symbols-outlined text-[#C84B31] text-[20px]">error_outline</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Missing quantitative metrics in recent experience</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Recruiters scan for concrete numbers rather than generic claims of contribution.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#F5C2C7] bg-[#FAF0EE] -mx-6 -mb-6 p-4 rounded-b-xl">
+<p class="font-label-sm text-label-sm text-[#C84B31] font-semibold mb-1">Recommended Fix</p>
+<p class="font-body-sm text-body-sm text-on-surface">Add numbers showing scale, users impacted, or % improvement in performance.</p>
+</div>
+</div>
+<!-- Medium Priority -->
+<div class="bg-surface-container-lowest border border-[#FCE1B6] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full bg-[#FEF6EC] text-[#D9822B] font-label-sm text-label-sm border border-[#FCE1B6]">
+                Medium Priority
+              </span>
+<span class="material-symbols-outlined text-[#D9822B] text-[20px]">warning_amber</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Passive voice detected in project descriptions</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Passive statements dilute individual initiative and technical ownership.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#FCE1B6] bg-[#FDF6EE] -mx-6 -mb-6 p-4 rounded-b-xl">
+<p class="font-label-sm text-label-sm text-[#D9822B] font-semibold mb-1">Recommended Fix</p>
+<p class="font-body-sm text-body-sm text-on-surface">Replace "Was responsible for building" with decisive verbs like "Architected and deployed".</p>
+</div>
+</div>
+<!-- Low Priority -->
+<div class="bg-surface-container-lowest border border-[#B7E1CD] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full bg-[#EDF7F2] text-[#2D8A66] font-label-sm text-label-sm border border-[#B7E1CD]">
+                Low Priority
+              </span>
+<span class="material-symbols-outlined text-[#2D8A66] text-[20px]">info</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Generic skills section heading</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Lumping all tools into a single unsegmented paragraph confuses keyword parsers.
+              </p>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-[#B7E1CD] bg-[#EBF5F0] -mx-6 -mb-6 p-4 rounded-b-xl">
+<p class="font-label-sm text-label-sm text-[#2D8A66] font-semibold mb-1">Recommended Fix</p>
+<p class="font-body-sm text-body-sm text-on-surface">Categorize into "Languages", "Frameworks", and "Developer Tools" for faster parsing.</p>
+</div>
+</div>
+</div>
+<!-- Before / After Bullet Rewrite Card -->
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-[20px]">autorenew</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Real Bullet Rewrite Example</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+<!-- Before Card -->
+<div class="border border-[#F5C2C7] bg-[#FAF0EE] rounded-xl p-6 flex flex-col justify-between">
+<div class="space-y-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#C84B31]"></span>
+<span class="font-label-md text-label-md text-[#C84B31] font-semibold uppercase tracking-wider">Before (Original Submission)</span>
+</div>
+<p class="font-headline-sm text-headline-sm italic text-on-surface font-normal">
+                "Worked on the frontend of a web application and fixed bugs reported by users."
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#F2CBC4] flex items-center gap-2 text-outline font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-[#C84B31]">close</span>
+<span>Lacks tools, metrics, scale, and proactive impact</span>
+</div>
+</div>
+<!-- After Card -->
+<div class="border border-[#C4E2D5] bg-[#EBF5F0] rounded-xl p-6 flex flex-col justify-between">
+<div class="space-y-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wider">After (Resumely AI Rewrite)</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface font-medium">
+                "Redesigned core UI workflows using React and TypeScript, resolving 45+ customer-reported defects and improving page load speeds by 28%."
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#C4E2D5] flex items-center gap-2 text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Adds targeted stack keywords, exact defect count, and % benchmark</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 6: ABOUT THE CREATOR -->
+<section class="py-16 md:py-20 border-t border-[#E6E2DA]" id="about">
+<div class="max-w-2xl mb-12">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Editorial Origin</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1.5">About the creator</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+          Engineered to dismantle the opacity of automated recruitment pipelines.
+        </p>
+</div>
+<div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-8 sm:p-10 shadow-sm flex flex-col md:flex-row items-center md:items-start gap-8">
+<!-- Creator Avatar -->
+<div class="shrink-0 flex flex-col items-center">
+<img alt="Creator Portrait" class="w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border border-[#E6E2DA] shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFgX3GnpLGNxNQ_EUNm89jskGp3EjE29BfpHmhq3Sm_bRlqm_VigoYNUaEmflEhi0iMrBPoZiz1MpI8BJdPYp6R0Hmyo2ayfBMhtA0Wq66pU0CM5Z23SM4ddVEsq200ANBcNre1Oc9ElIf9OcJmYGZZ6Y9RhfwPmuXpzbCR8LjmN6CTb2BfjLCIa7Z2d8if29nL5rhHlPjVAPqIzTSsUIGlwmIZpFh_zNVUQ9AUA"/>
+<span class="mt-3 px-3 py-1 rounded-full bg-surface-container border border-[#E6E2DA] text-outline font-label-sm text-label-sm">
+            Independent Builder
+          </span>
+</div>
+<!-- Creator Profile Content -->
+<div class="flex-1 space-y-4 text-center md:text-left">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Alex Morgan</h3>
+<p class="font-label-lg text-label-lg text-primary mt-0.5">Computer Science Student &amp; Software Builder</p>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Passionate about building transparent developer tools and career utilities that demystify recruiting software for fellow undergraduates and early-career job seekers.
+          </p>
+<div class="p-4 rounded-lg bg-surface border border-[#E6E2DA] font-body-sm text-body-sm text-on-surface-variant">
+<span class="font-medium text-on-surface">Technical Foundation:</span> Built with Python, Gemini AI, and OCR as a university capstone project to make high-quality resume critiques accessible to everyone without paywalled assessments.
+          </div>
+<!-- Links -->
+<div class="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-3">
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" href="https://github.com" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
+<span>GitHub Profile</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" href="https://linkedin.com" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current text-[#0A66C2]" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+<span>LinkedIn Connect</span>
+</a>
+<a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors" href="#analyze">
+<span class="material-symbols-outlined text-[16px]">upload</span>
+<span>Test The Parser</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- FINAL CALLOUT DESK -->
+<div class="my-16 p-8 rounded-xl bg-surface-container-high border border-[#E6E2DA] flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="space-y-1 text-center md:text-left">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Ready to audit your resume?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Immediate results. Zero tracking. Honest algorithmic critique.</p>
+</div>
+<a class="shrink-0 px-6 py-3 rounded-lg bg-primary hover:bg-[#185943] text-on-primary font-label-lg text-label-lg transition-colors shadow-sm" href="#analyze">
+        Upload Resume Now
+      </a>
+</div>
+</div>
+</div>
+<!-- Micro-Interactions Script -->
+<script>
+  function toggleJdSection() {
+    const container = document.getElementById('jd-input-container');
+    const icon = document.getElementById('jd-toggle-icon');
+    if (container.classList.contains('hidden')) {
+      container.classList.remove('hidden');
+      icon.textContent = 'remove';
+    } else {
+      container.classList.add('hidden');
+      icon.textContent = 'add';
+    }
+  }
+
+  function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+      const fileName = input.files[0].name;
+      const label = document.getElementById('file-upload-label');
+      label.innerHTML = `Selected file: <strong class="text-primary">${fileName}</strong>`;
+      const dropZone = document.getElementById('drop-zone');
+      dropZone.classList.add('border-primary', 'bg-surface-container-lowest');
+    }
+  }
+
+  function simulateAnalysis() {
+    const input = document.getElementById('file-upload-input');
+    if (!input.files || input.files.length === 0) {
+      const dropZone = document.getElementById('drop-zone');
+      dropZone.classList.add('border-primary');
+      setTimeout(() => dropZone.classList.remove('border-primary'), 1500);
+      alert('Please select or drop a resume file first (PDF, PNG, or JPG).');
+      return;
+    }
+    alert('Document parsed successfully. Viewing simulated diagnostic report on the right.');
+  }
+
+  // Drag and drop visual cues
+  const dropZone = document.getElementById('drop-zone');
+  if (dropZone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('border-primary', 'bg-[#FAF8F4]');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('bg-[#FAF8F4]');
+      }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files.length) {
+        document.getElementById('file-upload-input').files = files;
+        handleFileSelect({ files: files });
+      }
+    }, false);
+  }
+</script></main><footer class="w-full bg-[#FAF8F4] border-t border-[#E6E2DA] py-space-xl"><div class="max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg"><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><img alt="Resumely AI Logo" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UbGP1q5CilrF5rrhKlYRfu75S9S88q8nf8dZh6Gv1Sh2d_SxBZwZkGEsh7qYAIt7lgFN4N7O3BrEd9i5xet5PAjzaP12TkuhJ-eGHFHrYZV31P9l1ciFBAO3e1frxwf9DTu51WDjtYA9eKX_qnJfwrtqdQkE1m0ymL-L9lo8yq5Tcvdc8TLuBS17Nncygp-6PAEHIGGec__R51Bnc-NkMJ1FjLCMCiR12T_77dSB0"/><span class="font-headline-sm text-headline-sm text-on-surface">Resumely AI</span></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Clear, transparent resume diagnostics for ambitious careers.</p></div><nav class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#analyze">Analyze</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#what-you-get">What You Get</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#how-it-works">How it works</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#criteria">Criteria</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#about">About</a></nav><div class="w-full md:w-auto pt-space-md md:pt-0 border-t md:border-t-0 border-[#E6E2DA]"><p class="font-body-sm text-body-sm text-outline">© 2024 Resumely AI. Editorial diagnostic desk.</p></div></div></footer></body></html>

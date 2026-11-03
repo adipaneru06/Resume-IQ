@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_standard" name="shell-type"/>
+  <title>{% block title %}Resumely AI — Editorial ATS Resume Analyzer{% endblock %}</title>
+
+  <!-- Google Fonts: Material Symbols, Inter, Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Base Styles & Custom Utilities -->
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <link rel="stylesheet" href="/static/css/custom.css"/>
+
+  <!-- Tailwind CSS Engine & Extracted Design System Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error": "#ffffff",
+            "tertiary": "#723d00",
+            "on-tertiary-fixed-variant": "#6d3a00",
+            "on-background": "#1c1b1b",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#955100",
+            "surface-bright": "#fcf9f8",
+            "error-container": "#ffdad6",
+            "surface-variant": "#e5e2e1",
+            "on-surface-variant": "#3f4944",
+            "outline": "#6f7973",
+            "on-secondary-fixed-variant": "#005138",
+            "secondary": "#006c4b",
+            "inverse-primary": "#8ad6b5",
+            "secondary-container": "#9af5ca",
+            "primary": "#00563e",
+            "on-primary": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#002116",
+            "on-secondary": "#ffffff",
+            "surface": "#fcf9f8",
+            "secondary-fixed": "#9af5ca",
+            "surface-container-high": "#eae7e7",
+            "outline-variant": "#bec9c2",
+            "on-secondary-fixed": "#002114",
+            "tertiary-fixed-dim": "#ffb77a",
+            "primary-fixed": "#a5f2d0",
+            "surface-container": "#f0eded",
+            "inverse-surface": "#313030",
+            "surface-container-highest": "#e5e2e1",
+            "on-primary-fixed-variant": "#00513b",
+            "surface-tint": "#196b50",
+            "tertiary-fixed": "#ffdcc2",
+            "secondary-fixed-dim": "#7fd8af",
+            "primary-container": "#1f6f54",
+            "on-tertiary-container": "#ffd7b9",
+            "primary-fixed-dim": "#8ad6b5",
+            "error": "#ba1a1a",
+            "surface-container-low": "#f6f3f2",
+            "on-primary-container": "#a2efcd",
+            "on-surface": "#1c1b1b",
+            "on-tertiary-fixed": "#2e1500",
+            "on-secondary-container": "#057351",
+            "background": "#fcf9f8",
+            "inverse-on-surface": "#f3f0ef",
+            "surface-dim": "#dcd9d9"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "margin-mobile": "1rem"
+          },
+          fontFamily: {
+            "headline-sm": ["Newsreader", "serif"],
+            "label-lg": ["Inter", "sans-serif"],
+            "body-xl": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-xl": ["Newsreader", "serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "headline-xl-mobile": ["Newsreader", "serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "display-lg-mobile": ["Newsreader", "serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"]
+          },
+          fontSize: {
+            "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "500" }],
+            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+            "body-xl": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-xl": ["40px", { lineHeight: "48px", letterSpacing: "-0.015em", fontWeight: "400" }],
+            "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+            "display-lg": ["56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "500" }],
+            "headline-xl-mobile": ["30px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "400" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-md": ["24px", { lineHeight: "32px", fontWeight: "500" }],
+            "display-lg-mobile": ["38px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "400" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }],
+            "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Chart.js for visualization (loaded once for pages requiring charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <!-- Fixed Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F4] border-b border-[#E6E2DA]">
+    <div class="h-16 max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter flex items-center justify-between">
+      <a class="flex items-center gap-space-sm" data-path="resumely-review" href="/">
+        <img alt="Resumely AI Logo" class="h-8 w-auto object-contain" src="/static/images/logo.png" onerror="this.src='https://lh3.googleusercontent.com/aida/AEtjO1UbGP1q5CilrF5rrhKlYRfu75S9S88q8nf8dZh6Gv1Sh2d_SxBZwZkGEsh7qYAIt7lgFN4N7O3BrEd9i5xet5PAjzaP12TkuhJ-eGHFHrYZV31P9l1ciFBAO3e1frxwf9DTu51WDjtYA9eKX_qnJfwrtqdQkE1m0ymL-L9lo8yq5Tcvdc8TLuBS17Nncygp-6PAEHIGGec__R51Bnc-NkMJ1FjLCMCiR12T_77dSB0'"/>
+        <span class="font-headline-sm text-headline-sm text-on-surface tracking-tight hidden sm:inline">Resumely AI</span>
+      </a>
+      <nav class="flex items-center gap-space-md md:gap-space-lg" data-active-classes="text-primary font-label-lg text-label-lg underline underline-offset-8 decoration-primary">
+        <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="analyze" href="/#analyze">Analyze</a>
+        <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hidden sm:inline" data-path="what-you-get" href="/#what-you-get">What You Get</a>
+        <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hidden md:inline" data-path="how-it-works" href="/#how-it-works">How it works</a>
+        <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors hidden md:inline" data-path="criteria" href="/#criteria">Criteria</a>
+        <a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="/#about">About</a>
+        <a class="ml-space-xs flex items-center" data-path="account" href="/#about" title="About the Creator">
+          <img alt="Profile" class="w-8 h-8 rounded-full object-cover border border-[#E6E2DA]" src="/static/images/profile.jpg" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuCFgX3GnpLGNxNQ_EUNm89jskGp3EjE29BfpHmhq3Sm_bRlqm_VigoYNUaEmflEhi0iMrBPoZiz1MpI8BJdPYp6R0Hmyo2ayfBMhtA0Wq66pU0CM5Z23SM4ddVEsq200ANBcNre1Oc9ElIf9OcJmYGZZ6Y9RhfwPmuXpzbCR8LjmN6CTb2BfjLCIa7Z2d8if29nL5rhHlPjVAPqIzTSsUIGlwmIZpFh_zNVUQ9AUA'"/>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="w-full pt-16 bg-[#FAF8F4]">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-[#FAF8F4] border-t border-[#E6E2DA] py-space-xl">
+    <div class="max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg">
+      <div class="flex flex-col gap-space-xs">
+        <div class="flex items-center gap-space-sm">
+          <img alt="Resumely AI Logo" class="h-6 w-auto object-contain" src="/static/images/logo.png" onerror="this.src='https://lh3.googleusercontent.com/aida/AEtjO1UbGP1q5CilrF5rrhKlYRfu75S9S88q8nf8dZh6Gv1Sh2d_SxBZwZkGEsh7qYAIt7lgFN4N7O3BrEd9i5xet5PAjzaP12TkuhJ-eGHFHrYZV31P9l1ciFBAO3e1frxwf9DTu51WDjtYA9eKX_qnJfwrtqdQkE1m0ymL-L9lo8yq5Tcvdc8TLuBS17Nncygp-6PAEHIGGec__R51Bnc-NkMJ1FjLCMCiR12T_77dSB0'"/>
+          <span class="font-headline-sm text-headline-sm text-on-surface">Resumely AI</span>
+        </div>
+        <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Clear, transparent resume diagnostics for ambitious careers.</p>
+      </div>
+      <nav class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs">
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="/#analyze">Analyze</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="/#what-you-get">What You Get</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="/#how-it-works">How it works</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="/#criteria">Criteria</a>
+        <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="/#about">About</a>
+      </nav>
+      <div class="w-full md:w-auto pt-space-md md:pt-0 border-t md:border-t-0 border-[#E6E2DA]">
+        <p class="font-body-sm text-body-sm text-outline">© 2024 Resumely AI. Editorial diagnostic desk.</p>
+      </div>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
+

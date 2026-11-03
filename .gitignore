@@ -1,0 +1,67 @@
+# ==============================================================================
+# Resumely AI - Git Ignore
+# ==============================================================================
+
+# Environment Variables & Secrets (NEVER commit secrets or API keys)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Local SQLite Database & Analysis Stores
+*.db
+*.sqlite
+*.sqlite3
+resumely.db
+
+# Temporary Uploads (keep directory structure with .gitkeep)
+uploads/*
+!uploads/.gitkeep
+tmp/
+temp/
+
+# Python Bytecode & Cache Directories
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyo
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing & Coverage Artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Application & Server Logs
+*.log
+logs/
+
+# IDE & Code Editor Configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Operating System Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+

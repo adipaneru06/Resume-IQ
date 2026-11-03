@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Error — Resumely AI{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full py-20 min-h-[60vh] justify-center">
+  <div class="w-full max-w-[640px] mx-auto px-gutter-mobile md:px-gutter text-center space-y-6">
+    
+    <div class="w-16 h-16 rounded-full bg-[#FDEDED] text-[#C84B31] border border-[#F5C2C7] flex items-center justify-center mx-auto shadow-sm">
+      <span class="material-symbols-outlined text-[32px]">error_outline</span>
+    </div>
+
+    <div class="space-y-2">
+      <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">{{ status_code|default('Error') }}</span>
+      <h1 class="font-headline-lg text-headline-lg text-on-surface">{{ title|default('Something went wrong') }}</h1>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto">
+        {{ message|default('An unexpected situation occurred while processing your request.') }}
+      </p>
+    </div>
+
+    <div class="pt-4 flex items-center justify-center gap-4">
+      <a href="/#analyze" class="px-6 py-3 rounded-lg bg-primary hover:bg-[#185943] text-on-primary font-label-md text-label-md transition-colors shadow-sm">
+        Return to Analyzer
+      </a>
+      <a href="/" class="px-5 py-3 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+        Go Home
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+

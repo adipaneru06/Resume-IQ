@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Diagnostic Report — Resumely AI{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full py-10 md:py-16">
+  <div class="w-full max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter space-y-10">
+    
+    <!-- Top Action & Navigation Bar -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#E6E2DA] pb-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-[#E6E2DA] w-fit mb-2">
+          <span class="w-2 h-2 rounded-full bg-primary"></span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Evaluation Audit Finalized</span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg text-on-surface">Diagnostic Analysis Report</h1>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Document: <span class="font-medium text-on-surface">{{ record.filename }}</span> &bull; Evaluated: {{ record.created_at[:10] }}
+          {% if record.target_role %} &bull; Target Role: <span class="font-medium text-primary">{{ record.target_role }}</span>{% endif %}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <a href="/#analyze" class="px-4 py-2.5 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm">
+          <span class="material-symbols-outlined text-[16px]">refresh</span>
+          <span>Analyze another resume</span>
+        </a>
+        <a href="/report/{{ record.id }}/download" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-[#185943] text-on-primary font-label-md text-label-md transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm">
+          <span class="material-symbols-outlined text-[16px]">download</span>
+          <span>Download PDF report</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- BLOCK 1: AI SUMMARY VERDICT -->
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Editorial Verdict</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-surface-container border border-[#E6E2DA] text-outline font-label-sm text-label-sm">
+          Gemini Algorithmic Assessment
+        </span>
+      </div>
+      <h2 class="font-headline-md text-headline-md text-on-surface">Executive Assessment</h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+        {{ analysis.summary }}
+      </p>
+    </div>
+
+    <!-- BLOCK 2: KEY SCORES GRID -->
+    <div class="grid grid-cols-1 {% if analysis.job_match %}md:grid-cols-3{% else %}md:grid-cols-2{% endif %} gap-6 items-stretch">
+      
+      <!-- Card 1: Overall Score Gauge -->
+      <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between border-b border-[#E6E2DA] pb-3 mb-4">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Overall Score</h3>
+          <span class="px-2 py-0.5 rounded-full bg-surface-container text-outline font-label-sm text-label-sm">
+            Composite
+          </span>
+        </div>
+        
+        <div class="flex items-center gap-6 py-2">
+          <!-- Circular Gauge matching Landing Page Sample Diagnostic -->
+          <div class="relative w-28 h-28 shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+              <circle cx="50" cy="50" fill="none" r="40" stroke="#E6E2DA" stroke-width="8"></circle>
+              {% set dashoffset = 251.2 * (1 - analysis.overall_score / 100) %}
+              <circle cx="50" cy="50" fill="none" r="40" stroke="#00563e" stroke-dasharray="251.2" stroke-dashoffset="{{ dashoffset }}" stroke-linecap="round" stroke-width="8"></circle>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span class="font-headline-md text-headline-md text-on-surface leading-none">{{ analysis.overall_score }}</span>
+              <span class="font-label-sm text-label-sm text-outline">/ 100</span>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <p class="font-label-md text-label-md {% if analysis.overall_score >= 80 %}text-secondary{% elif analysis.overall_score >= 65 %}text-tertiary{% else %}text-error{% endif %} font-semibold">
+              {% if analysis.overall_score >= 80 %}Top Tier Candidate{% elif analysis.overall_score >= 65 %}Competitive Foundation{% else %}Requires Strategic Revision{% endif %}
+            </p>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">
+              Weighted calculation across 8 official rubric dimensions.
+            </p>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-[#E6E2DA] text-outline font-label-sm text-label-sm flex items-center justify-between">
+          <span>Weighted Criteria: 8</span>
+          <span class="text-primary font-medium">100% Calibrated</span>
+        </div>
+      </div>
+
+      <!-- Card 2: ATS Compatibility & Parsability Checks -->
+      <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between border-b border-[#E6E2DA] pb-3 mb-4">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">ATS Compatibility</h3>
+          <span class="px-2.5 py-0.5 rounded-full bg-[#EBF5F0] text-primary border border-[#C4E2D5] font-label-sm text-label-sm font-semibold">
+            {{ analysis.ats.score }} / 100
+          </span>
+        </div>
+
+        <div class="space-y-2.5">
+          {% for check in analysis.ats.checks[:4] %}
+          <div class="flex items-start gap-2.5">
+            {% if check.passed %}
+            <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+            {% else %}
+            <span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">cancel</span>
+            {% endif %}
+            <div class="text-body-sm">
+              <span class="font-medium text-on-surface">{{ check.label }}</span>:
+              <span class="text-on-surface-variant text-[13px]">{{ check.note }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-[#E6E2DA] text-outline font-label-sm text-label-sm flex items-center justify-between">
+          <span>Single-Column Standard</span>
+          <span class="text-secondary font-medium">Parsed Cleanly</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Job Match (Rendered ONLY if target role or JD provided) -->
+      {% if analysis.job_match %}
+      <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between border-b border-[#E6E2DA] pb-3 mb-4">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">Job Match</h3>
+          <span class="px-2.5 py-0.5 rounded-full bg-[#EBF5F0] text-primary border border-[#C4E2D5] font-label-sm text-label-sm font-semibold">
+            {{ analysis.job_match.percentage }}% Match
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <div class="flex items-center justify-between text-label-sm text-outline mb-1.5">
+              <span>Role Alignment Depth</span>
+              <span class="font-medium text-on-surface">{{ analysis.job_match.percentage }}%</span>
+            </div>
+            <div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+              <div class="bg-primary h-full rounded-full" style="width: {{ analysis.job_match.percentage }}%;"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <div class="p-3 bg-surface rounded-lg border border-[#E6E2DA] text-center">
+              <span class="font-label-sm text-outline block">Keywords Found</span>
+              <span class="font-headline-sm text-primary">{{ analysis.job_match.matched_keywords|length }}</span>
+            </div>
+            <div class="p-3 bg-surface rounded-lg border border-[#E6E2DA] text-center">
+              <span class="font-label-sm text-outline block">Missing Gaps</span>
+              <span class="font-headline-sm text-[#D9822B]">{{ analysis.job_match.missing_keywords|length }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-[#E6E2DA] text-outline font-label-sm text-label-sm flex items-center justify-between">
+          <span class="truncate">Role: {{ record.target_role or 'Target Posting' }}</span>
+          <span class="material-symbols-outlined text-[16px]">target</span>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- BLOCK 3: SECTION BENCHMARKS & RADAR VISUALIZATION -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left: Chart.js Radar Chart Card -->
+      <div class="lg:col-span-5 bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-7 shadow-sm space-y-4">
+        <div>
+          <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Structural Radar</span>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Section Balance</h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">
+            Relative strength across standard resume sections.
+          </p>
+        </div>
+        
+        <div class="relative w-full aspect-square max-w-[340px] mx-auto py-2">
+          <canvas id="sectionRadarChart"></canvas>
+        </div>
+
+        <div class="border-t border-[#E6E2DA] pt-3 text-center">
+          <p class="font-body-sm text-body-sm text-outline">
+            Equilateral shape denotes uniform editorial depth across sections.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Section Detail Breakdown -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Granular Evaluation</span>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Section Scores</h3>
+          </div>
+          <span class="text-outline font-label-sm text-label-sm">5 Core Modules</span>
+        </div>
+
+        <div class="space-y-3">
+          {% for sec in analysis.sections %}
+          <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-5 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="font-label-lg text-label-lg text-on-surface">{{ sec.name }}</h4>
+              <span class="px-2.5 py-0.5 rounded-full font-label-sm text-label-sm {% if sec.score >= 80 %}bg-[#EBF5F0] text-primary border border-[#C4E2D5]{% elif sec.score >= 65 %}bg-[#FEF6EC] text-[#D9822B] border border-[#FCE1B6]{% else %}bg-[#FDEDED] text-[#C84B31] border border-[#F5C2C7]{% endif %} font-semibold">
+                {{ sec.score }} / 100
+              </span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              {{ sec.reasoning }}
+            </p>
+            {% if sec.suggestions %}
+            <div class="pt-1 space-y-1">
+              {% for s in sec.suggestions %}
+              <div class="flex items-start gap-2 text-body-sm text-on-surface">
+                <span class="material-symbols-outlined text-primary text-[15px] shrink-0 mt-0.5">arrow_right</span>
+                <span>{{ s }}</span>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BLOCK 4: OFFICIAL RUBRIC CRITERIA SCORES -->
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div class="max-w-2xl">
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Analytical Rubric Performance</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">The 8 Criteria Behind Your Score</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">
+          Breakdown of how your document performed against the 8 transparent criteria established on the landing desk.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {% for crit in analysis.criteria_scores %}
+        <div class="p-4 rounded-lg bg-surface border border-[#E6E2DA] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-label-md text-label-md text-on-surface font-semibold">{{ crit.name }}</span>
+            <span class="font-label-md text-label-md text-primary font-bold">{{ crit.score }} / 100</span>
+          </div>
+          <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+            <div class="bg-primary h-full rounded-full" style="width: {{ crit.score }}%;"></div>
+          </div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant text-[13px]">
+            {{ crit.reasoning }}
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- BLOCK 5: STRENGTHS & WEAKNESSES -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+      
+      <!-- Key Strengths Card -->
+      <div class="bg-surface-container-lowest border border-[#C4E2D5] rounded-xl p-6 sm:p-7 shadow-sm space-y-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full bg-[#EBF5F0] flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined text-[18px]">thumb_up</span>
+          </span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Key Strengths</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Document assets to preserve</p>
+          </div>
+        </div>
+
+        <ul class="space-y-3 pt-2">
+          {% for st in analysis.strengths %}
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+            <span class="font-body-sm text-body-sm text-on-surface">{{ st }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Key Weaknesses Card -->
+      <div class="bg-surface-container-lowest border border-[#F5C2C7] rounded-xl p-6 sm:p-7 shadow-sm space-y-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full bg-[#FDEDED] flex items-center justify-center text-[#C84B31]">
+            <span class="material-symbols-outlined text-[18px]">priority_high</span>
+          </span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Gaps &amp; Weaknesses</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">High-impact issues to address</p>
+          </div>
+        </div>
+
+        <ul class="space-y-3 pt-2">
+          {% for w in analysis.weaknesses %}
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-[#C84B31] text-[18px] shrink-0 mt-0.5">error_outline</span>
+            <span class="font-body-sm text-body-sm text-on-surface">{{ w }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- BLOCK 6: KEYWORD INTELLIGENCE CHIPS -->
+    {% if analysis.job_match and (analysis.job_match.matched_keywords or analysis.job_match.missing_keywords) %}
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div>
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Keyword Intelligence</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Role Keyword Alignment</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">
+          Keywords compared against target competencies and industry job descriptions.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Matched Keywords -->
+        {% if analysis.job_match.matched_keywords %}
+        <div>
+          <label class="block font-label-sm text-label-sm text-primary uppercase tracking-wider mb-2 font-semibold">
+            ✓ Verified Competencies Present ({{ analysis.job_match.matched_keywords|length }})
+          </label>
+          <div class="flex flex-wrap gap-2">
+            {% for kw in analysis.job_match.matched_keywords %}
+            <span class="px-3 py-1 rounded-full bg-[#EBF5F0] text-primary border border-[#C4E2D5] font-label-sm text-label-sm">
+              {{ kw }}
+            </span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Missing Keywords -->
+        {% if analysis.job_match.missing_keywords %}
+        <div class="pt-2">
+          <label class="block font-label-sm text-label-sm text-[#D9822B] uppercase tracking-wider mb-2 font-semibold">
+            ! Recommended Keywords to Incorporate ({{ analysis.job_match.missing_keywords|length }})
+          </label>
+          <div class="flex flex-wrap gap-2">
+            {% for kw in analysis.job_match.missing_keywords %}
+            <span class="px-3 py-1 rounded-full bg-[#FEF6EC] text-[#D9822B] border border-[#FCE1B6] font-label-sm text-label-sm">
+              + {{ kw }}
+            </span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- BLOCK 7: PRIORITIZED ACTIONABLE SUGGESTIONS -->
+    <div class="space-y-6">
+      <div>
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Actionable Guidance</span>
+        <h3 class="font-headline-lg text-headline-lg text-on-surface mt-1">Prioritized Suggestions</h3>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+          Targeted edits ranked by their direct impact on recruiter callback rates.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for sug in analysis.suggestions %}
+        {% set p = sug.priority|lower %}
+        <div class="bg-surface-container-lowest {% if p == 'high' %}border border-[#F5C2C7]{% elif p == 'medium' %}border border-[#FCE1B6]{% else %}border border-[#B7E1CD]{% endif %} rounded-xl p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full {% if p == 'high' %}bg-[#FDEDED] text-[#C84B31] border border-[#F5C2C7]{% elif p == 'medium' %}bg-[#FEF6EC] text-[#D9822B] border border-[#FCE1B6]{% else %}bg-[#EDF7F2] text-[#2D8A66] border border-[#B7E1CD]{% endif %} font-label-sm text-label-sm">
+                {{ sug.priority|capitalize }} Priority
+              </span>
+              {% if p == 'high' %}
+              <span class="material-symbols-outlined text-[#C84B31] text-[20px]">error_outline</span>
+              {% elif p == 'medium' %}
+              <span class="material-symbols-outlined text-[#D9822B] text-[20px]">warning_amber</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[#2D8A66] text-[20px]">info</span>
+              {% endif %}
+            </div>
+
+            <div>
+              <p class="font-label-md text-label-md text-outline uppercase tracking-wider mb-1">Issue Identified</p>
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2 leading-snug">{{ sug.issue }}</h4>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 {% if p == 'high' %}border-t border-[#F5C2C7] bg-[#FAF0EE] text-[#C84B31]{% elif p == 'medium' %}border-t border-[#FCE1B6] bg-[#FDF6EE] text-[#D9822B]{% else %}border-t border-[#B7E1CD] bg-[#EBF5F0] text-[#2D8A66]{% endif %} -mx-6 -mb-6 p-4 rounded-b-xl">
+            <p class="font-label-sm text-label-sm font-semibold mb-1">Recommended Fix</p>
+            <p class="font-body-sm text-body-sm text-on-surface">{{ sug.fix }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- BLOCK 8: BEFORE / AFTER BULLET REWRITES WITH COPY -->
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">autorenew</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Bullet Point Rewrites</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Original phrasing re-engineered with active metrics &amp; concrete outcomes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        {% for rewrite in analysis.bullet_rewrites %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          
+          <!-- Before Card -->
+          <div class="border border-[#F5C2C7] bg-[#FAF0EE] rounded-xl p-6 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#C84B31]"></span>
+                <span class="font-label-md text-label-md text-[#C84B31] font-semibold uppercase tracking-wider">Before (Original Submission)</span>
+              </div>
+              <p class="font-headline-sm text-headline-sm italic text-on-surface font-normal">
+                "{{ rewrite.before }}"
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-[#F2CBC4] flex items-center gap-2 text-outline font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-[16px] text-[#C84B31]">close</span>
+              <span>Qualitative statement lacking quantifiable outcomes</span>
+            </div>
+          </div>
+
+          <!-- After Card with Copy Button -->
+          <div class="border border-[#C4E2D5] bg-[#EBF5F0] rounded-xl p-6 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                  <span class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wider">After (Resumely AI Rewrite)</span>
+                </div>
+                <button type="button" onclick="copyToClipboard(this, `{{ rewrite.after|escape }}`)" class="inline-flex items-center gap-1 px-3 py-1 rounded-lg border border-[#C4E2D5] bg-surface hover:bg-surface-container text-on-surface font-label-sm text-label-sm transition-colors cursor-pointer" title="Copy to clipboard">
+                  <span class="material-symbols-outlined text-[15px]">content_copy</span>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <p class="font-headline-sm text-headline-sm text-on-surface font-medium">
+                "{{ rewrite.after }}"
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-[#C4E2D5] flex items-center gap-2 text-secondary font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-[16px]">check</span>
+              <span>{{ rewrite.why }}</span>
+            </div>
+          </div>
+
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- BLOCK 9: LANGUAGE & SYNTACTIC CLARITY -->
+    {% if analysis.language_issues %}
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div>
+        <span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Editorial Cleanliness</span>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">Language &amp; Grammar Audit</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">
+          Detection of passive constructions, corporate platitudes, and overly verbose phrasing.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        {% for issue in analysis.language_issues %}
+        <div class="p-4 rounded-xl bg-surface border border-[#E6E2DA] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="space-y-1 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded-full font-label-sm text-label-sm font-semibold {% if issue.type == 'passive' %}bg-[#FEF6EC] text-[#D9822B] border border-[#FCE1B6]{% elif issue.type == 'buzzword' %}bg-[#FDF6EE] text-[#955100] border border-[#FFD7B9]{% elif issue.type == 'grammar' %}bg-[#FDEDED] text-[#C84B31] border border-[#F5C2C7]{% else %}bg-surface-container text-outline border border-[#E6E2DA]{% endif %}">
+                {{ issue.type|upper }}
+              </span>
+              <span class="font-body-sm line-through text-outline">"{{ issue.original }}"</span>
+            </div>
+            <div class="flex items-center gap-2 pt-0.5">
+              <span class="material-symbols-outlined text-primary text-[16px]">arrow_forward</span>
+              <span class="font-label-md text-label-md text-on-surface">"{{ issue.suggestion }}"</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Bottom Action Desk -->
+    <div class="p-8 rounded-xl bg-surface-container-high border border-[#E6E2DA] flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1 text-center md:text-left">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">Ready to refine another document?</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">Export your analysis PDF or audit another version.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="/report/{{ record.id }}/download" class="px-5 py-3 rounded-lg bg-primary hover:bg-[#185943] text-on-primary font-label-lg text-label-lg transition-colors shadow-sm flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">download</span>
+          <span>Download PDF Report</span>
+        </a>
+        <a href="/#analyze" class="px-5 py-3 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors shadow-sm flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">upload</span>
+          <span>Upload Another Resume</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/results.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Collect section data passed from server for radar chart
+    const sectionLabels = [
+      {% for sec in analysis.sections %}
+        "{{ sec.name }}"{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ];
+    const sectionScores = [
+      {% for sec in analysis.sections %}
+        {{ sec.score }}{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ];
+    initRadarChart(sectionLabels, sectionScores);
+  });
+</script>
+{% endblock %}
+

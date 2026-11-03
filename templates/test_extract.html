@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Extraction Test Sandbox — Resumely AI{% endblock %}
+
+{% block content %}
+<div class="flex flex-col w-full py-12">
+  <div class="w-full max-w-[1100px] mx-auto px-gutter-mobile md:px-gutter space-y-8">
+    
+    <!-- Test Harness Header -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#E6E2DA] pb-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-[#E6E2DA] w-fit mb-2">
+          <span class="w-2 h-2 rounded-full bg-secondary"></span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Phase 2 Test Route</span>
+        </div>
+        <h1 class="font-headline-lg text-headline-lg text-on-surface">Extraction Sandbox</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+          Verify PyMuPDF direct text extraction and Tesseract OCR fallback on uploaded documents.
+        </p>
+      </div>
+      <a href="/" class="px-4 py-2 rounded-lg border border-[#E6E2DA] bg-surface hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        <span>Return to Landing</span>
+      </a>
+    </div>
+
+    <!-- Upload Form Card -->
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm">
+      <h2 class="font-headline-sm text-headline-sm text-on-surface mb-2">Test Resume File Upload</h2>
+      <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
+        Upload a digital PDF, a scanned/image PDF, or a PNG/JPG screenshot to inspect raw extraction metrics.
+      </p>
+
+      <form action="/test-extract" method="post" enctype="multipart/form-data" class="space-y-6">
+        <div class="p-6 border-2 border-dashed border-[#D2CCC2] rounded-xl bg-surface flex flex-col items-center justify-center text-center">
+          <input type="file" name="file" id="test-file-input" accept=".pdf,.png,.jpg,.jpeg" class="block w-full max-w-md text-body-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-label-sm file:font-semibold file:bg-primary file:text-on-primary hover:file:bg-[#185943] file:cursor-pointer" required/>
+          <span class="font-body-sm text-body-sm text-outline mt-3">
+            Supports PDF, PNG, JPG (Max 5MB). Temporary files are deleted immediately after reading.
+          </span>
+        </div>
+
+        <button type="submit" class="px-6 py-3 rounded-lg bg-primary hover:bg-[#185943] text-on-primary font-label-md text-label-md transition-colors flex items-center gap-2 cursor-pointer shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">document_scanner</span>
+          <span>Upload &amp; Run Extraction</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Error Banner (if error occurred) -->
+    {% if error %}
+    <div class="p-5 rounded-xl border border-[#F5C2C7] bg-[#FAF0EE] text-on-surface flex items-start gap-3">
+      <span class="material-symbols-outlined text-error text-[22px] shrink-0 mt-0.5">error</span>
+      <div>
+        <h3 class="font-label-lg text-label-lg text-error">Extraction Failed</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{{ error }}</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Extraction Result Display -->
+    {% if result %}
+    <div class="bg-surface-container-lowest border border-[#E6E2DA] rounded-xl p-6 sm:p-8 shadow-sm space-y-6">
+      
+      <!-- Metrics Header -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E6E2DA] pb-6">
+        <div>
+          <span class="px-2.5 py-1 rounded-full {% if result.is_ocr %}bg-[#FEF6EC] text-[#D9822B] border border-[#FCE1B6]{% else %}bg-[#EBF5F0] text-primary border border-[#C4E2D5]{% endif %} font-label-sm text-label-sm">
+            {{ result.method }}
+          </span>
+          <h2 class="font-headline-sm text-headline-sm text-on-surface mt-2">{{ result.filename }}</h2>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="p-3 bg-surface rounded-lg border border-[#E6E2DA] text-center min-w-[90px]">
+            <span class="font-label-sm text-label-sm text-outline block">Pages</span>
+            <span class="font-headline-sm text-headline-sm text-on-surface">{{ result.page_count }}</span>
+          </div>
+          <div class="p-3 bg-surface rounded-lg border border-[#E6E2DA] text-center min-w-[90px]">
+            <span class="font-label-sm text-label-sm text-outline block">Words</span>
+            <span class="font-headline-sm text-headline-sm text-on-surface">{{ result.word_count }}</span>
+          </div>
+          <div class="p-3 bg-surface rounded-lg border border-[#E6E2DA] text-center min-w-[110px]">
+            <span class="font-label-sm text-label-sm text-outline block">Characters</span>
+            <span class="font-headline-sm text-headline-sm text-on-surface">{{ result.char_count }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy & Sanitization Check -->
+      <div class="p-4 rounded-lg bg-surface border border-[#E6E2DA] flex items-center justify-between text-body-sm">
+        <span class="flex items-center gap-2 text-secondary font-medium">
+          <span class="material-symbols-outlined text-[18px]">verified_user</span>
+          Temporary file purged from disk immediately. Zero data retained.
+        </span>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('raw-text-view').innerText); alert('Copied extracted text to clipboard');" class="text-primary hover:underline font-label-sm flex items-center gap-1 cursor-pointer">
+          <span class="material-symbols-outlined text-[16px]">content_copy</span>
+          <span>Copy Text</span>
+        </button>
+      </div>
+
+      <!-- Extracted Text Viewer -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="font-label-md text-label-md text-on-surface uppercase tracking-wider">
+            Raw Extracted Content (Sanitized UTF-8)
+          </label>
+        </div>
+        <div class="bg-surface rounded-xl border border-[#E6E2DA] p-5 max-h-[500px] overflow-y-auto">
+          <pre id="raw-text-view" class="font-mono text-body-sm text-on-surface whitespace-pre-wrap leading-relaxed select-all">{{ result.text }}</pre>
+        </div>
+      </div>
+
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
+
