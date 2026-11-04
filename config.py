@@ -103,13 +103,13 @@ assert TOTAL_WEIGHT == 100, f"Scoring criteria weights must total 100%, got {TOT
 # ==========================================
 # Users can update their information here or directly in the templates
 CREATOR_INFO = {
-    "name": "Alex Morgan",
+    "name": "Aditya Paneru",
     "role": "Computer Science Student & Software Builder",
     "avatar_url": "/static/images/profile.jpg",
     "tag": "Independent Builder",
-    "bio": "Passionate about building transparent developer tools and career utilities that demystify recruiting software for fellow undergraduates and early-career job seekers.",
+    "bio": "I'm a B.Tech Data Science student passionate about technology, problem-solving, and building impactful projects. I enjoy exploring Data Science, AI/ML, software development, and emerging technologies while continuously improving my technical and creative skills. I love turning ideas into practical solutions, collaborating with others, and learning through hands-on experiences.",
     "technical_foundation": "Built with Python, Gemini AI, and OCR as a university capstone project to make high-quality resume critiques accessible to everyone without paywalled assessments.",
-    "github_url": "https://github.com",
-    "linkedin_url": "https://linkedin.com"
+    "github_url": "https://github.com/adipaneru06",
+    "linkedin_url": "https://www.linkedin.com/in/aditya-paneru-b976833a5/"
 }
 
